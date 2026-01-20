@@ -13,3 +13,13 @@ def test_login_success(driver):
     welcome_text = dashboard.get_welcome_text()
 
     assert "testuser" in welcome_text
+
+def test_login_failure(driver):
+    login = LoginPage(driver)
+
+    login.open()
+    login.login("testuser", "wrongpassword")
+
+    error_text = login.wait_for_login_error()
+
+    assert "Invalid credentials" in error_text
