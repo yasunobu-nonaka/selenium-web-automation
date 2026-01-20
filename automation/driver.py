@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def create_driver():
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
 
     return webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),

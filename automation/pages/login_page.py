@@ -16,3 +16,8 @@ class LoginPage:
         wait.until(EC.presence_of_element_located((By.ID, "username"))).send_keys(username)
         self.driver.find_element(By.ID, "password").send_keys(password)
         self.driver.find_element(By.ID, "login-btn").click()
+
+    def wait_for_redirect(self):
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("/dashboard")
+        )
