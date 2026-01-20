@@ -7,19 +7,21 @@ def test_login_success(driver):
     dashboard = DashboardPage(driver)
 
     login.open()
-    login.login("testuser", "password123")
-    login.wait_for_redirect()
+    result = login.login("testuser", "password123")
+    # login.wait_for_redirect()
 
-    welcome_text = dashboard.get_welcome_text()
+    # welcome_text = dashboard.get_welcome_text()
 
-    assert "testuser" in welcome_text
+    assert result == "success"
+    assert "testuser" in dashboard.get_welcome_text()
 
 def test_login_failure(driver):
     login = LoginPage(driver)
 
     login.open()
-    login.login("testuser", "wrongpassword")
+    result = login.login("testuser", "wrongpassword")
 
-    error_text = login.wait_for_login_error()
+    # error_text = login.wait_for_login_error()
 
-    assert "Invalid credentials" in error_text
+    assert result == "failure"
+    assert "Invalid credentials" in login.get_error_text()

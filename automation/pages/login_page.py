@@ -11,19 +11,38 @@ class LoginPage:
     def open(self):
         self.driver.get(self.url)
 
-    def login(self, username, password):
+    def login(self, username, password, timeout=10):
         wait = WebDriverWait(self.driver, 10)
 
         wait.until(EC.presence_of_element_located((By.ID, "username"))).send_keys(username)
         self.driver.find_element(By.ID, "password").send_keys(password)
         self.driver.find_element(By.ID, "login-btn").click()
 
-    def wait_for_redirect(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.url_contains("/dashboard")
-        )
+        try:
+            wait.until(
+                lambda d: "/dashboard" in d.current_url
+                or self._has_login_error()
+            )
+        except TimeoutException:
+            raise AssertionError("ログイン結果が確定しませんでした")
+        
+        if "/dashboard" in self.driver.current_url:
+            return "success"
+        else:
+            return "failure"
+        
+    def _has_login_error(self):
+        return len(self.driver.find_elements(By.CSS_SELECTOR, "p")) > 0
+    
+    def get_error_text(self):
+        return self.driver.find_element(By.CSS_SELECTOR, "p").text
 
-    def wait_for_login_error(self):
-        return WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "p"))
-        ).text
+    # def wait_for_redirect(self):
+    #     WebDriverWait(self.driver, 10).until(
+    #         EC.url_contains("/dashboard")
+    #     )
+
+    # def wait_for_login_error(self):
+    #     return WebDriverWait(self.driver, 10).until(
+    #         EC.presence_of_element_located((By.CSS_SELECTOR, "p"))
+    #     ).text
