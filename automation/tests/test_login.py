@@ -1,4 +1,3 @@
-import time
 from automation.pages.login_page import LoginPage
 from automation.pages.search_page import SearchPage
 

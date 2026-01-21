@@ -24,7 +24,6 @@ class SearchPage:
 
         try:
             wait.until(
-                # EC.presence_of_element_located((By.TAG_NAME, "h2"))
                 lambda d: "/search-results" in d.current_url
             )
         except TimeoutException:
