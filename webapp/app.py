@@ -22,6 +22,21 @@ def login():
 
     return render_template("login.html")
     
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        location = request.form["location"]
+        checkin = request.form["checkin"]
+        checkout = request.form["checkout"]
+        guests = request.form["guests"]
+
+        return redirect(url_for("dashboard"))
+
+    return render_template("search.html")
+
 
 @app.route("/dashboard")
 def dashboard():
