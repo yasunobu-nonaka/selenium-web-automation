@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h2>Search Results</h2>
+
+    <ul>
+        {% for hotel in hotels %}
+            <li class="hotel">
+                {{ hotel }}
+                <form action="/select" method="post">
+                    <input type="hidden" name="hotel" value="{{ hotel }}">
+                    <button class="select-btn" type="submit">Select</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/search" id="back-to-search">Back to search</a>
+</body>
+</html>
