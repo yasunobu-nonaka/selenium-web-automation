@@ -36,13 +36,3 @@ class LoginPage:
     
     def get_error_text(self):
         return self.driver.find_element(By.CSS_SELECTOR, "p").text
-
-    # def wait_for_redirect(self):
-    #     WebDriverWait(self.driver, 10).until(
-    #         EC.url_contains("/dashboard")
-    #     )
-
-    # def wait_for_login_error(self):
-    #     return WebDriverWait(self.driver, 10).until(
-    #         EC.presence_of_element_located((By.CSS_SELECTOR, "p"))
-    #     ).text
