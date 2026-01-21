@@ -20,13 +20,13 @@ class LoginPage:
 
         try:
             wait.until(
-                lambda d: "/dashboard" in d.current_url
+                lambda d: "/search" in d.current_url
                 or self._has_login_error()
             )
         except TimeoutException:
             raise AssertionError("ログイン結果が確定しませんでした")
         
-        if "/dashboard" in self.driver.current_url:
+        if "/search" in self.driver.current_url:
             return "success"
         else:
             return "failure"

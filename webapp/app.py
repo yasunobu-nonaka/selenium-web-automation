@@ -16,7 +16,7 @@ def login():
 
         if USERS.get(username) == password:
             session["user"] = username
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("search"))
         else:
             return render_template("login.html", error="Invalid credentials")
 
