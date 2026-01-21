@@ -19,7 +19,7 @@ def test_login_search_and_select(driver):
     search.search("Tokyo", "2026-05-01", "2026-05-02", 2)
 
     # 3. Select from search results
-    search_results.wait_until_opend()
+    search_results.wait_until_opened()
     search_results.select_first_hotel()
 
     # 4. Dashboard

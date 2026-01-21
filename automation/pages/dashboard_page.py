@@ -6,8 +6,15 @@ class DashboardPage:
     def __init__(self, driver):
         self.driver = driver
 
+    def wait_until_opened(self, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.url_contains("/dashboard")
+        )
+
     def get_welcome_text(self):
+        self.wait_until_opened()
         wait = WebDriverWait(self.driver, 10)
+
         return wait.until(
             EC.presence_of_element_located((By.TAG_NAME, "h2"))
         ).text
