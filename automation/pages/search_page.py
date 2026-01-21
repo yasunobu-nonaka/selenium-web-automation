@@ -24,7 +24,8 @@ class SearchPage:
 
         try:
             wait.until(
-                lambda d: "/dashboard" in d.current_url
+                # EC.presence_of_element_located((By.TAG_NAME, "h2"))
+                lambda d: "/search-results" in d.current_url
             )
         except TimeoutException:
             raise AssertionError("検索後の画面遷移が確認できませんでした")
