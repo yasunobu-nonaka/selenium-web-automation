@@ -20,13 +20,13 @@ class LoginPage:
 
         try:
             wait.until(
-                lambda d: "/dashboard" in d.current_url
+                lambda d: "/search" in d.current_url
                 or self._has_login_error()
             )
         except TimeoutException:
             raise AssertionError("ログイン結果が確定しませんでした")
         
-        if "/dashboard" in self.driver.current_url:
+        if "/search" in self.driver.current_url:
             return "success"
         else:
             return "failure"
@@ -36,13 +36,3 @@ class LoginPage:
     
     def get_error_text(self):
         return self.driver.find_element(By.CSS_SELECTOR, "p").text
-
-    # def wait_for_redirect(self):
-    #     WebDriverWait(self.driver, 10).until(
-    #         EC.url_contains("/dashboard")
-    #     )
-
-    # def wait_for_login_error(self):
-    #     return WebDriverWait(self.driver, 10).until(
-    #         EC.presence_of_element_located((By.CSS_SELECTOR, "p"))
-    #     ).text

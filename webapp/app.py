@@ -16,18 +16,59 @@ def login():
 
         if USERS.get(username) == password:
             session["user"] = username
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("search"))
         else:
             return render_template("login.html", error="Invalid credentials")
 
     return render_template("login.html")
     
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        location = request.form["location"]
+
+        if location.lower() == "nowhere":
+            hotels = []
+        else:
+            # 仮の検索結果
+            hotels = [
+                "Hotel Tokyo Central",
+                "Tokyo Business Hotel",
+                "Luxury Stay Tokyo"
+            ]
+            
+        session["hotels"] = hotels
+        return redirect(url_for("search_results"))
+
+    return render_template("search.html")
+
+@app.route("/search-results")
+def search_results():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    hotels = session.get("hotels", [])
+    return render_template("search_results.html", hotels=hotels)
+
+@app.route("/select", methods=["POST"])
+def select():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    selected_hotel = request.form["hotel"]
+    session["selected_hotel"] = selected_hotel
+    return redirect(url_for("dashboard"))
 
 @app.route("/dashboard")
 def dashboard():
     if "user" not in session:
         return redirect(url_for("login"))
-    return render_template("dashboard.html", user=session["user"])
+    
+    hotel = session.get("selected_hotel")
+    return render_template("dashboard.html", user=session["user"], hotel=hotel)
 
 @app.route("/logout")
 def logout():
