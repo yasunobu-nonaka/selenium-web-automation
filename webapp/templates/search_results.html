@@ -8,17 +8,21 @@
 <body>
     <h2>Search Results</h2>
 
-    <ul>
-        {% for hotel in hotels %}
-            <li class="hotel">
-                {{ hotel }}
-                <form action="/select" method="post">
-                    <input type="hidden" name="hotel" value="{{ hotel }}">
-                    <button class="select-btn" type="submit">Select</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if hotels %}
+        <ul>
+            {% for hotel in hotels %}
+                <li class="hotel">
+                    {{ hotel }}
+                    <form action="/select" method="post">
+                        <input type="hidden" name="hotel" value="{{ hotel }}">
+                        <button class="select-btn" type="submit">Select</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p id="no-results">No hotels found.</p>
+    {% endif %}
 
     <a href="/search" id="back-to-search">Back to search</a>
 </body>

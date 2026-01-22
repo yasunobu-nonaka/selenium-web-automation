@@ -28,12 +28,18 @@ def search():
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        # 仮の検索結果
-        hotels = [
-            "Hotel Tokyo Central",
-            "Tokyo Business Hotel",
-            "Luxury Stay Tokyo"
-        ]
+        location = request.form["location"]
+
+        if location.lower() == "nowhere":
+            hotels = []
+        else:
+            # 仮の検索結果
+            hotels = [
+                "Hotel Tokyo Central",
+                "Tokyo Business Hotel",
+                "Luxury Stay Tokyo"
+            ]
+            
         session["hotels"] = hotels
         return redirect(url_for("search_results"))
 

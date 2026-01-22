@@ -14,5 +14,11 @@ class SearchResultsPage:
             EC.presence_of_element_located((By.TAG_NAME, "h2"))
         )
 
+    def has_results(self):
+        return len(self.driver.find_elements(By.CLASS_NAME, "hotel")) > 0
+
     def select_first_hotel(self):
         self.driver.find_element(By.CLASS_NAME, "select-btn").click()
+
+    def get_no_results_message(self):
+        return self.driver.find_element(By.ID, "no-results").text
