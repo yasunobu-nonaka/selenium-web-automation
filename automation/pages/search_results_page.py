@@ -8,6 +8,9 @@ class SearchResultsPage:
 
     def wait_until_opened(self, timeout=10):
         WebDriverWait(self.driver, timeout).until(
+            EC.url_contains("/search-results")
+        )
+        WebDriverWait(self.driver, timeout).until(
             EC.presence_of_element_located((By.TAG_NAME, "h2"))
         )
 
