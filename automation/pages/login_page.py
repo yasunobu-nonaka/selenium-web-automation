@@ -1,25 +1,23 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from automation.pages.base_page import BasePage
 
-class LoginPage:
+class LoginPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         self.url = "http://127.0.0.1:5000/"
 
     def open(self):
         self.driver.get(self.url)
 
     def login(self, username, password, timeout=10):
-        wait = WebDriverWait(self.driver, 10)
-
-        wait.until(EC.presence_of_element_located((By.ID, "username"))).send_keys(username)
+        self.wait_for_element((By.ID, "username")).send_keys(username)
         self.driver.find_element(By.ID, "password").send_keys(password)
         self.driver.find_element(By.ID, "login-btn").click()
 
         try:
-            wait.until(
+            WebDriverWait(self.driver, timeout).until(
                 lambda d: "/search" in d.current_url
                 or self._has_login_error()
             )
